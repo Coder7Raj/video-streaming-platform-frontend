@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+const BACKEND_URL = "http://localhost:5000";
+
 const getYouTubeThumbnail = (url) => {
   if (!url) return "";
   let videoId = "";
@@ -16,7 +18,10 @@ const VideoCard = ({ video }) => {
   const isYouTube =
     video.url &&
     (video.url.includes("youtube.com") || video.url.includes("youtu.be"));
-  const thumbnail = isYouTube ? getYouTubeThumbnail(video.url) : video.filePath; // local uploaded video
+
+  const thumbnail = isYouTube
+    ? getYouTubeThumbnail(video.url)
+    : BACKEND_URL + video.filePath; // local uploaded video preview
 
   return (
     <div
@@ -31,7 +36,7 @@ const VideoCard = ({ video }) => {
         />
       ) : (
         <video
-          src={video.filePath}
+          src={thumbnail}
           className="h-40 w-full object-cover rounded"
           muted
           controls={false} // small preview, no controls
