@@ -12,12 +12,20 @@ const Home = () => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      if (searchQuery) {
-        const res = await searchVideos(searchQuery);
-        setVideos(res.data);
-      } else {
-        const res = await getVideos();
-        setVideos(res.data);
+      try {
+        let res;
+        if (searchQuery) {
+          res = await searchVideos(searchQuery);
+        } else {
+          res = await getVideos();
+        }
+        // Sort oldest first (optional)
+        const sortedVideos = res.data.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+        setVideos(sortedVideos);
+      } catch (err) {
+        console.error(err);
       }
     };
     fetchVideos();
