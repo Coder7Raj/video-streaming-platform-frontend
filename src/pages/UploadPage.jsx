@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { uploadVideo } from "../api/api";
+import { uploadVideo } from "../api/api"; // only once
 import Navbar from "../components/Navbar";
 
 const UploadPage = () => {
@@ -16,13 +16,11 @@ const UploadPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = JSON.parse(localStorage.getItem("user"))._id;
 
     if (uploadOption === "url" && !url) {
       alert("Please enter a video URL");
       return;
     }
-
     if (uploadOption === "file" && !file) {
       alert("Please select a video file");
       return;
@@ -30,21 +28,20 @@ const UploadPage = () => {
 
     try {
       const formData = new FormData();
-      formData.append("user", user);
       formData.append("title", title);
       formData.append("description", description);
       formData.append("tags", tags.split(","));
       formData.append("transcript", transcript);
 
-      if (uploadOption === "url") {
-        formData.append("url", url);
-      } else if (uploadOption === "file") {
-        formData.append("video", file);
-      }
+      if (uploadOption === "url") formData.append("url", url);
+      if (uploadOption === "file") formData.append("video", file);
 
-      await uploadVideo(formData);
+      const token = localStorage.getItem("token"); // ✅ just get string
+      await uploadVideo(formData, token);
+
       navigate("/");
     } catch (err) {
+      console.error(err);
       alert(err.response?.data?.error || "Something went wrong!");
     }
   };
@@ -90,7 +87,7 @@ const UploadPage = () => {
             onChange={(e) => setTranscript(e.target.value)}
           />
 
-          {/* Toggle between URL and File */}
+          {/* Upload option toggle */}
           <div className="mb-3 flex gap-4">
             <label>
               <input

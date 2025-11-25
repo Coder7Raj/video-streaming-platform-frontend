@@ -19,13 +19,21 @@ const Navbar = () => {
       >
         VideoStream
       </div>
+
       <SearchBar />
+
       <div className="flex gap-4 mt-2 md:mt-0">
         {token ? (
           <>
             <Link to="/upload" className="bg-blue-600 px-3 py-1 rounded">
               Upload
             </Link>
+
+            {/* ➤ Added My Videos */}
+            <Link to="/my-videos" className="bg-purple-600 px-3 py-1 rounded">
+              My Videos
+            </Link>
+
             <button
               onClick={handleLogout}
               className="bg-red-600 px-3 py-1 rounded"

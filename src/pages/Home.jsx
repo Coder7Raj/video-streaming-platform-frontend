@@ -32,7 +32,7 @@ const Home = () => {
   }, [searchQuery]);
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-[1500px] mx-auto">
       <Navbar />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {videos.map((video) => (
