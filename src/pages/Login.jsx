@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/api";
 
 const Login = () => {
@@ -40,6 +40,9 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-2 mb-3 rounded"
         />
+        <p className="space-y-2">
+          Don't have an account? <Link to={"/signup"}>Signup</Link>
+        </p>
         <button className="w-full bg-blue-600 text-white p-2 rounded">
           Login
         </button>
