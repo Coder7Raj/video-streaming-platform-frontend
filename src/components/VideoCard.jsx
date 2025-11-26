@@ -39,7 +39,7 @@ const VideoCard = ({ video }) => {
           src={thumbnail}
           className="h-40 w-full object-cover rounded"
           muted
-          controls={false} // small preview, no controls
+          controls={false}
         />
       )}
       <h3 className="font-semibold mt-2">{video.title}</h3>
