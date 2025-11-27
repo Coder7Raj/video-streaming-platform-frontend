@@ -1,82 +1,8 @@
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import { getVideos } from "../api/api";
-// import Navbar from "../components/Navbar";
-
-// const BACKEND_URL = "http://localhost:5000";
-
-// const getYouTubeEmbedUrl = (url) => {
-//   if (!url) return "";
-//   let videoId = "";
-//   if (url.includes("youtu.be")) {
-//     videoId = url.split("/").pop().split("?")[0];
-//   } else if (url.includes("youtube.com/watch")) {
-//     videoId = new URL(url).searchParams.get("v");
-//   }
-//   return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
-// };
-
-// const VideoPage = () => {
-//   const { id } = useParams();
-//   const [video, setVideo] = useState(null);
-
-//   useEffect(() => {
-//     const fetchVideo = async () => {
-//       const res = await getVideos();
-//       const vid = res.data.find((v) => v._id === id);
-//       setVideo(vid);
-//     };
-//     fetchVideo();
-//   }, [id]);
-
-//   if (!video) return <div>Loading...</div>;
-
-//   const isYouTube =
-//     video.url &&
-//     (video.url.includes("youtube.com") || video.url.includes("youtu.be"));
-
-//   const videoSrc = isYouTube
-//     ? getYouTubeEmbedUrl(video.url)
-//     : BACKEND_URL + video.filePath;
-
-//   return (
-//     <div>
-//       <Navbar />
-//       <div className="flex gap-3 items-center justify-between">
-//         <div className="w-[80%] p-4">
-//           {isYouTube ? (
-//             <iframe
-//               width="100%"
-//               height="480"
-//               src={videoSrc}
-//               title={video.title}
-//               frameBorder="0"
-//               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//               allowFullScreen
-//             />
-//           ) : (
-//             <video src={videoSrc} controls width="100%" height="480" />
-//           )}
-
-//           <div className="flex flex-col items-start justify-start space-y-2">
-//             <h1 className="text-2xl font-bold mt-4">{video.title}</h1>
-//             <p className="mt-2">{video.description}</p>
-//             <p className="mt-2 text-gray-500">Tags: {video.tags.join(", ")}</p>
-//             <p className="mt-2 text-gray-500">Transcript: {video.transcript}</p>
-//           </div>
-//         </div>
-//         {/* other related videos */}
-//         <div className="w-[20%] p-4 flex flex-col gap-2">related videos</div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default VideoPage;
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVideos } from "../api/api";
 import Navbar from "../components/Navbar";
+import Loader from "../custom/Loader";
 
 const BACKEND_URL = "http://localhost:5000";
 
@@ -119,7 +45,7 @@ const VideoPage = () => {
     fetchVideos();
   }, [id]);
 
-  if (!video) return <div>Loading...</div>;
+  if (!video) return <Loader />;
 
   const isYouTube =
     video.url &&

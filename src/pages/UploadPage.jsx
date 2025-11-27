@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { uploadVideo } from "../api/api"; // only once
+import { uploadVideo } from "../api/api";
 import Navbar from "../components/Navbar";
 
 const UploadPage = () => {
@@ -36,7 +36,7 @@ const UploadPage = () => {
       if (uploadOption === "url") formData.append("url", url);
       if (uploadOption === "file") formData.append("video", file);
 
-      const token = localStorage.getItem("token"); // ✅ just get string
+      const token = localStorage.getItem("token");
       await uploadVideo(formData, token);
 
       navigate("/");
